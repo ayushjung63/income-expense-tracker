@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Income Expense Tracker</title>
+</head>
+<body>
+<p>
+    <button><a href="income/form">Add Income</a></button>
+    <button><a href="expense/form">Add Expense</a></button>
+</p>
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="income:${incomeList}">
+            <td>#</td>
+            <td th:text="${income.amount}"></td>
+            <td th:text="${income.description}"></td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td><h4 th:text="${totalIncome}"></h4></td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="expense:${expenseList}">
+        <td>#</td>
+        <td th:text="${expense.amount}"></td>
+        <td th:text="${expense.description}"></td>
+    </tr>
+    <tr>
+        <td>Total</td>
+        <td><h4 th:text="${totalExpense}"></h4></td>
+    </tr>
+    </tbody>
+</table>
+<p>
+    Gross:<span style="color:green" th:text="${gross}"></span>
+</p>
+
+</body>
+</html>
