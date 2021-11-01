@@ -1,0 +1,25 @@
+button a{
+    text-decoration:none;
+    color:white;
+}
+button a:hover{
+  text-decoration:none;
+    color:white;
+}
+.income-container{
+    margin-top:10px;
+    margin-left:20px;
+}
+.income-container button{
+    margin-botton:5px;
+}
+.expense-container{
+    margin-top:10px;
+    margin-left:20px;
+}
+.expense-container button{
+    margin-botton:5px;
+}
+p .gross{
+    margin-left:20px;
+}

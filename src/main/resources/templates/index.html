@@ -1,58 +1,110 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <title>Income Expense Tracker</title>
 </head>
 <body>
-<p>
-    <button><a href="income/form">Add Income</a></button>
-    <button><a href="expense/form">Add Expense</a></button>
-</p>
-<table>
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Amount</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="income:${incomeList}">
-            <td>#</td>
-            <td th:text="${income.amount}"></td>
-            <td th:text="${income.description}"></td>
-        </tr>
-        <tr>
-            <td>Total</td>
-            <td><h4 th:text="${totalIncome}"></h4></td>
-        </tr>
-    </tbody>
-</table>
 
-<table>
-    <thead>
-    <tr>
-        <th>Date</th>
-        <th>Amount</th>
-        <th>Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="expense:${expenseList}">
-        <td>#</td>
-        <td th:text="${expense.amount}"></td>
-        <td th:text="${expense.description}"></td>
-    </tr>
-    <tr>
-        <td>Total</td>
-        <td><h4 th:text="${totalExpense}"></h4></td>
-    </tr>
-    </tbody>
-</table>
-<p>
-    Gross:<span style="color:green" th:text="${gross}"></span>
-</p>
 
+<div style="margin:10px 50px;" class="content">
+    <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">New Transaction</button>
+    </div>
+    <br/>
+
+    <div  >
+        <table  class="table">
+            <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Description</th>
+                <th scope="col">Transcation Type</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item:${transcationList}" >
+                <th scope="row" th:text="${item.date}">#</th>
+                <td th:text="${item.amount}"></td>
+                <td th:text="${item.description}"></td>
+                <td  th:text="${item.type}"></td>
+            </tr>
+
+            <tr>
+                <th scope="row">Total Income</th>
+                <td>---</td>
+                <td>---</td>
+                <td style="color:green;" th:text="${totalIncome}"></td>
+            </tr>
+            <tr>
+                <th scope="row">Total Expense</th>
+                <td>---</td>
+                <td>---</td>
+                <td  style="color:red;" th:text="${totalExpense}"></td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center"><h5>Gross</h5></th>
+                <td th:text="${gross}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Transcation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/save">
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Transaction Type</label>
+                            <select name="type" class="form-control" id="exampleFormControlSelect1">
+                                <option>Select transcation type</option>
+                                <option value="INCOME">Income</option>
+                                <option value="EXPENSE">Expense</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Amount:</label>
+                            <input type="text" name="amount" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Description:</label>
+                            <textarea name="description" class="form-control" id="message-text"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save Transcation</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$('#exampleModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-body input').val(recipient)
+})
+</script>
 </body>
 </html>
