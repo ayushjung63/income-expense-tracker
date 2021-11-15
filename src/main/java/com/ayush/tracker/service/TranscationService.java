@@ -9,7 +9,7 @@ public interface TranscationService {
     List<Transaction> allTranscation();
     Transaction saveTranscation(Transaction transaction) throws ParseException;
     Boolean deleteTranscation(int id);
+    List<Transaction> getTranscationByDate(Search search);
 
-    List<Transaction> getIncome();
-    List<Transaction> getExpense();
+    List<Transaction> todayTranscation();
 }

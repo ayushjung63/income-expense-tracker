@@ -12,12 +12,30 @@
 
 
 <div style="margin:10px 50px;" class="content">
-    <div>
+    <div class="row">
+    <div class="col-md-6">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">New Transaction</button>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+        <select th:onchange="window.location.href='/'+this.value">
+            <option selected disabled>Filter Transcations</option>
+            <option value="all">All Transcation</a></option>
+            <option value="">Today</option>
+        </select>
+            &nbsp;&nbsp;
+        <form method="post" action="/search">
+            <input type="date" name="from">
+            <input type="date" name="to">
+            <input type="submit" value="Search">
+        </form>
+        </div>
+    </div>
     </div>
     <br/>
 
-    <div  >
+    <div>
+        <h4 th:text="${message}" align="center"></h4>
         <table  class="table">
             <thead>
             <tr>
@@ -104,7 +122,11 @@
   // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
   var modal = $(this)
   modal.find('.modal-body input').val(recipient)
-})
+});
+
+$("#search").click(function(){
+  $("#search-form").show();
+});
 </script>
 </body>
 </html>

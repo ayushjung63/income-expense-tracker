@@ -23,3 +23,8 @@ button a:hover{
 p .gross{
     margin-left:20px;
 }
+
+.content .header{
+    display:"flex";
+    align-content:"space-between";
+}

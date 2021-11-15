@@ -42,14 +42,19 @@ public class TranscationServiceImpl implements  TranscationService{
     }
 
     @Override
-    public List<Transaction> getIncome() {
-        String type=Transaction.TranscationType.INCOME.name();
-        return transactionRepo.findByType(Transaction.TranscationType.INCOME);
+    public List<Transaction> getTranscationByDate(Search search) {
+        String from=search.getFrom();
+        String to=search.getTo();
+        System.out.println(this.transactionRepo.findByDateFromTo(from,to));
+        return this.transactionRepo.findByDateFromTo(from,to);
     }
 
     @Override
-    public List<Transaction> getExpense() {
-        String type=Transaction.TranscationType.EXPENSE.name();
-        return transactionRepo.findByType(Transaction.TranscationType.EXPENSE);
+    public List<Transaction> todayTranscation() {
+        LocalDate localDate=LocalDate.now();
+        String today=localDate.toString();
+        return  this.transactionRepo.findByToday(today);
     }
+
+
 }
