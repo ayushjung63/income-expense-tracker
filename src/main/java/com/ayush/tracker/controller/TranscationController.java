@@ -4,6 +4,7 @@ import com.ayush.tracker.model.*;
 import com.ayush.tracker.service.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
+import org.springframework.ui.*;
 import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
@@ -21,15 +22,21 @@ public class TranscationController {
     }
 
     @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public String saveTranscation(@Valid @ModelAttribute Transaction transaction, BindingResult bindingResult){
+    public String saveTranscation(@Valid @ModelAttribute Transaction transaction, BindingResult bindingResult, Model model){
+        Map<String,String> errors=new HashMap<>();
         if(bindingResult.hasErrors()) {
+           /* bindingResult.getAllErrors().forEach(error->{
+                String field=error.getObjectName();
+                String message=error.getDefaultMessage();
+                errors.put(field,message);
+            });*/
+            model.addAttribute("error","Please specify transcations details properly");
             return  "index";
         }else{
             try {
                 Transaction transaction1 = transcationService.saveTranscation(transaction);
                 return "redirect:/";
             } catch (Exception e) {
-                System.out.println("Here");
                 e.printStackTrace();
                 return null;
             }
